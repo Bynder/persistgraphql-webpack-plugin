@@ -2,6 +2,7 @@ var VirtualModulesPlugin = require('webpack-virtual-modules');
 var RawSource = require('webpack-sources').RawSource;
 var ExtractGQL = require('persistgraphql/lib/src/ExtractGQL').ExtractGQL;
 var path = require('path');
+var sha512 = require('sha512');
 var addTypenameTransformer = require('persistgraphql/lib/src/queryTransformers').addTypenameTransformer;
 var graphql = require('graphql');
 var _ = require('lodash');
@@ -122,6 +123,15 @@ PersistGraphQLPlugin.prototype.apply = function(compiler) {
               }] : undefined});
 
             mapObj = finalExtractor.createOutputMapFromString(allQueries.join('\n'));
+
+            // Turn numeric ids into hashes.
+            if (self.options.useHashes) {
+              var newMap = {};
+              Object.keys(mapObj).forEach(query => {
+                newMap[query] = sha512(query).toString('hex');
+              });
+              mapObj = newMap;
+            }
           }
 
           var newQueryMap = JSON.stringify(mapObj);
