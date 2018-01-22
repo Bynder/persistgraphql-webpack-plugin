@@ -157,7 +157,7 @@ PersistGraphQLPlugin.prototype.apply = function(compiler) {
             // Turn numeric ids into hashes.
             if (self.options.useHashes) {
               var newMap = {};
-              Object.keys(mapObj).forEach(query => {
+              Object.keys(mapObj).forEach(function(query) {
                 newMap[query] = sha512(query).toString("hex");
               });
               mapObj = newMap;
