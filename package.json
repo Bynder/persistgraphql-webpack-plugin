@@ -1,6 +1,6 @@
 {
-  "name": "persistgraphql-webpack-plugin",
-  "version": "0.5.7",
+  "name": "@bynder-private/persistgraphql-webpack-plugin",
+  "version": "0.5.8",
   "publishConfig": {
     "registry": "http://verdaccio.bynder.io:8080"
   },
@@ -39,7 +39,8 @@
   "dependencies": {
     "persistgraphql": "^0.3.5",
     "webpack-virtual-modules": "^0.1.7",
-    "js-sha512": "0.7.1"
+    "js-sha512": "0.7.1",
+    "js-sha256": "0.9.0"
   },
   "files": [
     "*.js"

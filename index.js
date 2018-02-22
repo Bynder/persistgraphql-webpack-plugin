@@ -3,6 +3,7 @@ var RawSource = require("webpack-sources").RawSource;
 var ExtractGQL = require("persistgraphql/lib/src/ExtractGQL").ExtractGQL;
 var path = require("path");
 var sha512 = require("js-sha512");
+var sha256 = require("js-sha256");
 var addTypenameTransformer = require("persistgraphql/lib/src/queryTransformers")
   .addTypenameTransformer;
 var graphql = require("graphql");
@@ -156,9 +157,18 @@ PersistGraphQLPlugin.prototype.apply = function(compiler) {
 
             // Turn numeric ids into hashes.
             if (self.options.useHashes) {
+              var hashingAlgorithm = self.options.hashingAlgorithm;
+              var hash;
+              if (hashingAlgorithm === "sha256") {
+                hash = sha256;
+              } else if (hashingAlgorithm === "sha512") {
+                hash = sha512;
+              } else {
+                hash = sha512;
+              }
               var newMap = {};
               Object.keys(mapObj).forEach(function(query) {
-                newMap[query] = sha512(query).toString("hex");
+                newMap[query] = hash(query).toString("hex");
               });
               mapObj = newMap;
             }
