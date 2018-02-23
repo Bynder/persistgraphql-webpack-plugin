@@ -1,6 +1,6 @@
 {
   "name": "@bynder-private/persistgraphql-webpack-plugin",
-  "version": "0.5.9",
+  "version": "0.5.10",
   "publishConfig": {
     "registry": "http://verdaccio.bynder.io:8080"
   },
