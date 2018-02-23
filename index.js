@@ -2,8 +2,8 @@ var VirtualModulesPlugin = require("webpack-virtual-modules");
 var RawSource = require("webpack-sources").RawSource;
 var ExtractGQL = require("persistgraphql/lib/src/ExtractGQL").ExtractGQL;
 var path = require("path");
-var sha512 = require("js-sha512");
-var sha256 = require("js-sha256");
+var sha512 = require("crypto-js/sha512");
+var sha256 = require("crypto-js/sha256");
 var addTypenameTransformer = require("persistgraphql/lib/src/queryTransformers")
   .addTypenameTransformer;
 var graphql = require("graphql");
@@ -168,7 +168,7 @@ PersistGraphQLPlugin.prototype.apply = function(compiler) {
               }
               var newMap = {};
               Object.keys(mapObj).forEach(function(query) {
-                newMap[query] = hash(query).toString("hex");
+                newMap[query] = hash(query).toString();
               });
               mapObj = newMap;
             }
